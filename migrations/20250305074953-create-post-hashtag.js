@@ -9,16 +9,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      UserId: {
+      PostId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
+          model: 'Posts',
           key: 'id'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      TagId: {
+      HashtagId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Hashtags',

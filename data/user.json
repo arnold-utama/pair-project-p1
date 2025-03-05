@@ -1,0 +1,20 @@
+[
+    {
+        "email": "abdul@gmail.com",
+        "name": "abdulll ajaa",
+        "password": "guaAbdulNich",
+        "role": "admin"
+    },
+    {
+        "email": "yanbiii@gmail.com",
+        "name": "yanbiii ajaa",
+        "password": "guaYanbiNich",
+        "role": "user"
+    },
+    {
+        "email": "zalvin@gmail.com",
+        "name": "zalvinnn ajaa",
+        "password": "guaZalvinNich",
+        "role": "user"
+    }
+]

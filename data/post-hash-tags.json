@@ -1,0 +1,30 @@
+[
+    {
+        "PostId": 1,
+        "HashtagId": 1
+    },
+    {
+        "PostId": 1,
+        "HashtagId": 3
+    },
+    {
+        "PostId": 2,
+        "HashtagId": 2
+    },
+    {
+        "PostId": 2,
+        "HashtagId": 3
+    },
+    {
+        "PostId": 2,
+        "HashtagId": 4
+    },
+    {
+        "PostId": 3,
+        "HashtagId": 2
+    },
+    {
+        "PostId": 3,
+        "HashtagId": 5
+    }
+]
