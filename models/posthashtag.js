@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   PostHashtag.init({
-    UserId: DataTypes.INTEGER,
-    TagId: DataTypes.INTEGER
+    PostId: DataTypes.INTEGER,
+    HashtagId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'PostHashtag',

@@ -1,0 +1,26 @@
+[
+    {
+        "bio": "be your self",
+        "profilePicture": "tet",
+        "gender": "tet",
+        "birthday": "2045-05-09",
+        "isPrivate": true,
+        "UserId": 1
+    },
+    {
+        "bio": "be your self",
+        "profilePicture": "tet",
+        "gender": "tet",
+        "birthday": "2045-05-09",
+        "isPrivate": true,
+        "UserId": 2
+    },
+    {
+        "bio": "be your self",
+        "profilePicture": "tet",
+        "gender": "tet",
+        "birthday": "2045-05-09",
+        "isPrivate": true,
+        "UserId": 3
+    }
+]
