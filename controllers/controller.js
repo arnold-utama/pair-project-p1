@@ -1,6 +1,8 @@
 const formatDate = require("../helpers/helper");
 const { User, Profile, Post, Hashtag, PostHashtag } = require("../models");
 const bcrypt = require("bcryptjs");
+const fs = require("fs");
+const path = require("path");
 
 class Controller {
   static async search(req, res) {
@@ -92,7 +94,9 @@ class Controller {
 
   static async renderUserProfileAndPosts(req, res) {
     try {
+      let { message } = req.query;
       let id = req.session.user.id;
+      let postCount = await Profile.countPost(id);
       let profile = await Profile.findOne({
         where: { UserId: id },
         include: {
@@ -102,7 +106,7 @@ class Controller {
           },
         },
       });
-      res.render("profile", { profile, formatDate });
+      res.render("profile", { profile, postCount, formatDate, message });
     } catch (error) {
       res.send(error.message);
     }
@@ -122,7 +126,7 @@ class Controller {
   }
   static async handlerEditProfile(req, res) {
     try {
-      let { profilePicture, name, birthday, gender, bio, isPrivate } = req.body;
+      let { name, birthday, gender, bio, isPrivate } = req.body;
       let id = req.session.user.id;
       let user = await User.findByPk(id);
       await user.update({ name });
@@ -130,6 +134,21 @@ class Controller {
         include: User,
         where: { UserId: id },
       });
+      let profilePicture = profile.profilePicture;
+      if (req.file) {
+        if (profile.profilePicture) {
+          const oldImagePath = path.join(
+            __dirname,
+            "..",
+            "public",
+            profile.profilePicture
+          );
+          if (fs.existsSync(oldImagePath)) {
+            fs.unlinkSync(oldImagePath);
+          }
+        }
+        profilePicture = `/uploads/${req.file.filename}`;
+      }
       await profile.update({
         profilePicture,
         birthday,
@@ -159,10 +178,14 @@ class Controller {
   static async handlerAddPost(req, res) {
     try {
       let UserId = req.session.user.id;
-      let { image, caption, hashtags } = req.body;
+      let { caption, hashtags } = req.body;
       if (!hashtags || hashtags.length === 0) {
         res.redirect("/posts/add?error=Hashtags are required");
       } else {
+        let image = req.file ? `/uploads/${req.file.filename}` : null;
+        if (!image) {
+          return res.redirect("/posts/add?error=Image is required");
+        }
         let newPost = await Post.create({ image, caption, UserId });
         for (const hashtag of hashtags) {
           await PostHashtag.create({ PostId: newPost.id, HashtagId: hashtag });
@@ -201,8 +224,8 @@ class Controller {
       let { error } = req.query;
       let { id } = req.params;
       let hashtags = await Hashtag.findAll();
-      let post = await Post.findByPk(id, {include: Hashtag});
-      let checkedHashtagIds = post.Hashtags.map(el => el.id)
+      let post = await Post.findByPk(id, { include: Hashtag });
+      let checkedHashtagIds = post.Hashtags.map((el) => el.id);
       if (
         req.session.user.role === "admin" ||
         req.session.user.id === post.UserId
@@ -231,7 +254,7 @@ class Controller {
         for (const hashtag of hashtags) {
           await PostHashtag.create({ PostId: id, HashtagId: hashtag });
         }
-        res.redirect("/profile");
+        res.redirect(`/posts/${id}`);
       }
     } catch (error) {
       res.send(error.message);
@@ -246,8 +269,17 @@ class Controller {
         req.session.user.role === "admin" ||
         req.session.user.id === post.UserId
       ) {
+        let imagePath = path.join(__dirname, "..", "public", post.image);
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
         await post.destroy();
-        res.redirect("/profile");
+        let message = `Successfully deleted post with id ${post.id}`;
+        if (req.session.user.role === "admin") {
+          res.redirect(`/home?message=${message}`);
+        } else {
+          res.redirect(`/profile?message=${message}`);
+        }
       } else {
         error = "You don't have access to delete this post";
         res.redirect(`/posts/${id}?error=${error}`);

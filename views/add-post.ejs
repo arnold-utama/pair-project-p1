@@ -21,10 +21,10 @@
         <% }) %>
       </div>
     <% } %>
-    <form action="/posts/add" method="post">
+    <form action="/posts/add" method="post" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="image" class="form-label">Image</label>
-        <input type="text" class="form-control" id="image" name="image" />
+        <input type="file" class="form-control" id="image" name="image" />
       </div>
       <div class="mb-3">
         <label for="caption" class="form-label">Caption</label>

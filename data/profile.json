@@ -1,25 +1,25 @@
 [
     {
-        "bio": "be your self",
-        "profilePicture": "tet",
+        "bio": "NT bang dul",
+        "profilePicture": "/uploads/default-profile-picture.jpg",
         "gender": "M",
-        "birthday": "2045-05-09",
+        "birthday": "1990-05-09",
         "isPrivate": false,
         "UserId": 1
     },
     {
-        "bio": "be your self",
-        "profilePicture": "tet",
+        "bio": "Saya seorang naga",
+        "profilePicture": "/uploads/default-profile-picture.jpg",
         "gender": "M",
-        "birthday": "2045-05-09",
+        "birthday": "1998-05-09",
         "isPrivate": false,
         "UserId": 2
     },
     {
-        "bio": "be your self",
-        "profilePicture": "tet",
+        "bio": "NT bang dul",
+        "profilePicture": "/uploads/default-profile-picture.jpg",
         "gender": "M",
-        "birthday": "2045-05-09",
+        "birthday": "2000-05-09",
         "isPrivate": false,
         "UserId": 3
     }

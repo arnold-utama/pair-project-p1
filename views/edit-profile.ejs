@@ -21,10 +21,13 @@
         <% }) %>
       </div>
     <% } %>
-    <form action="/profile/edit" method="post">
+    <form action="/profile/edit" method="post" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="profilePicture" class="form-label">Profile Picture</label>
-        <input type="text" class="form-control" id="profilePicture" name="profilePicture" value="<%= profile.profilePicture %>" />
+        <input type="file" class="form-control" id="profilePicture" name="profilePicture" />
+        <% if (profile.profilePicture) { %>
+          <img src="<%= profile.profilePicture %>" alt="Profile Picture" width="150"/>
+        <% } %>
       </div>
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>

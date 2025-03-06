@@ -4,10 +4,6 @@
         "HashtagId": 1
     },
     {
-        "PostId": 1,
-        "HashtagId": 3
-    },
-    {
         "PostId": 2,
         "HashtagId": 2
     },
@@ -16,15 +12,75 @@
         "HashtagId": 3
     },
     {
-        "PostId": 2,
+        "PostId": 3,
+        "HashtagId": 1
+    },
+    {
+        "PostId": 3,
+        "HashtagId": 3
+    },
+    {
+        "PostId": 3,
         "HashtagId": 4
     },
     {
-        "PostId": 3,
+        "PostId": 4,
+        "HashtagId": 4
+    },
+    {
+        "PostId": 5,
+        "HashtagId": 1
+    },
+    {
+        "PostId": 5,
         "HashtagId": 2
     },
     {
-        "PostId": 3,
-        "HashtagId": 5
+        "PostId": 6,
+        "HashtagId": 2
+    },
+    {
+        "PostId": 6,
+        "HashtagId": 3
+    },
+    {
+        "PostId": 7,
+        "HashtagId": 3
+    },
+    {
+        "PostId": 8,
+        "HashtagId": 4
+    },
+    {
+        "PostId": 9,
+        "HashtagId": 1
+    },
+    {
+        "PostId": 9,
+        "HashtagId": 3
+    },
+    {
+        "PostId": 10,
+        "HashtagId": 2
+    },
+    {
+        "PostId": 10,
+        "HashtagId": 4
+    },
+    {
+        "PostId": 11,
+        "HashtagId": 3
+    },
+    {
+        "PostId": 12,
+        "HashtagId": 4
+    },
+    {
+        "PostId": 12,
+        "HashtagId": 1
+    },
+    {
+        "PostId": 13,
+        "HashtagId": 1
     }
 ]

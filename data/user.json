@@ -1,20 +1,20 @@
 [
     {
         "email": "abdul@gmail.com",
-        "name": "abdulll ajaa",
-        "password": "guaAbdulNich",
+        "name": "Abdulll",
+        "password": "12345678",
         "role": "admin"
     },
     {
         "email": "yanbiii@gmail.com",
-        "name": "yanbiii ajaa",
-        "password": "guaYanbiNich",
+        "name": "Yanbiii",
+        "password": "12345678",
         "role": "user"
     },
     {
         "email": "zalvin@gmail.com",
-        "name": "zalvinnn ajaa",
-        "password": "guaZalvinNich",
+        "name": "Zalvinnn",
+        "password": "12345678",
         "role": "user"
     }
 ]
