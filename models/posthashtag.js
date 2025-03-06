@@ -13,8 +13,22 @@ module.exports = (sequelize, DataTypes) => {
   }
   PostHashtag.init(
     {
-      PostId: DataTypes.INTEGER,
-      HashtagId: DataTypes.INTEGER,
+      PostId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      HashtagId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Hashtag is required",
+          },
+          notEmpty: {
+            msg: "Hashtag is required",
+          },
+        },
+      },
     },
     {
       sequelize,
