@@ -100,7 +100,13 @@ class Controller {
           },
         },
       });
-      res.render("profile", { profile, postCount, formatDate, message, session: req.session });
+      res.render("profile", {
+        profile,
+        postCount,
+        formatDate,
+        message,
+        session: req.session,
+      });
     } catch (error) {
       res.send(error.message);
     }
@@ -244,7 +250,13 @@ class Controller {
         req.session.user.role === "admin" ||
         req.session.user.id === post.UserId
       ) {
-        res.render("edit-post", { post, hashtags, checkedHashtagIds, error, session: req.session });
+        res.render("edit-post", {
+          post,
+          hashtags,
+          checkedHashtagIds,
+          error,
+          session: req.session,
+        });
       } else {
         error = "You don't have access to edit this post";
         res.redirect(`/posts/${id}?error=${error}`);
@@ -285,10 +297,10 @@ class Controller {
       ) {
         await post.destroy();
         let message = `Successfully deleted post with id ${post.id}`;
-        if (req.session.user.role === "admin") {
-          res.redirect(`/home?message=${message}`);
-        } else {
+        if (req.session.user.id === post.UserId) {
           res.redirect(`/profile?message=${message}`);
+        } else {
+          res.redirect(`/home?message=${message}`);
         }
       } else {
         error = "You don't have access to delete this post";
