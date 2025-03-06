@@ -3,6 +3,13 @@ const { User, Profile, Post, Hashtag, PostHashtag } = require("../models");
 const bcrypt = require("bcryptjs");
 
 class Controller {
+  static async search(req, res) {
+    try {
+      res.render("search");
+    } catch (error) {
+      res.send(error.message);
+    }
+  }
   static async redirectToHome(req, res) {
     try {
       res.redirect("/home");
