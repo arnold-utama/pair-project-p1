@@ -12,10 +12,13 @@ module.exports = (sequelize, DataTypes) => {
       Profile.belongsTo(models.User);
     }
     get age() {
-      var today = new Date();
-      var birthDate = new Date(this.birthday);
-      var age = today.getFullYear() - birthDate.getFullYear();
-      var m = today.getMonth() - birthDate.getMonth();
+      if (!this.birthDate) {
+        return undefined;
+      }
+      let today = new Date();
+      let birthDate = new Date(this.birthday);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      let m = today.getMonth() - birthDate.getMonth();
       if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
         age--;
       }
@@ -33,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         });
         return postCount;
       } catch (error) {
-        throw(error);
+        throw error;
       }
     }
   }
