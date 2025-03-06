@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instagaram</title>
+  </head>
+  <body>
+    <h1>My Profile</h1>
+    <hr />
+    <h2>Profile Details</h2>
+    <hr />
+    <a href="/profile/edit">Edit Profile</a>
+    <div>
+      <% if (profile.profilePicture) { %>
+      <img src="<%= profile.profilePicture %>" alt="profile_picture.png" />
+      <% } else { %>
+      <p>[profile picture not set]</p>
+      <% } %>
+    </div>
+    <p>Name: <%= profile.User.name %></p>
+    <p>Age: <%= profile.birthday ? profile.age : "[birthday not set]" %></p>
+    <p>Gender: <%= profile.gender || "[gender not set]" %></p>
+    <p>Bio: <%= profile.bio || "[bio not set]" %></p>
+    <p>Account created on: <%= formatDate(profile.createdAt) %></p>
+    <p>Account status: <%= profile.isPrivate ? "Private" : "Public" %></p>
+    <hr />
+    <h2>My Posts</h2>
+    <hr />
+    <a href="/posts/add">New Post</a>
+    <% profile.User.Posts.forEach(el => { %>
+    <div>
+      <a href="/posts/<%= el.id %>">
+        <img src="<%= el.image %>" alt="post_image" />
+      </a>
+    </div>
+    <% }) %>
+  </body>
+</html>

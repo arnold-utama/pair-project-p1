@@ -14,7 +14,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Hashtag.init(
     {
-      name: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       sequelize,
