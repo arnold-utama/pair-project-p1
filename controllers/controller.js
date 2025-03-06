@@ -223,8 +223,14 @@ class Controller {
           },
         ],
       });
-      let picture = await Profile.findAll()
-      res.render("home", { data, search, message, session: req.session, picture });
+      let picture = await Profile.findAll();
+      res.render("home", {
+        data,
+        search,
+        message,
+        session: req.session,
+        picture,
+      });
     } catch (error) {
       res.send(error.message);
     }
@@ -233,7 +239,12 @@ class Controller {
     try {
       let { error } = req.query;
       let { id } = req.params;
-      let post = await Post.findByPk(id, { include: [User, Hashtag] });
+      let post = await Post.findByPk(id, {
+        include: [
+          { model: User, include: { model: Profile } },
+          { model: Hashtag },
+        ],
+      });
       res.render("post-detail", {
         post,
         formatDate,
@@ -300,9 +311,9 @@ class Controller {
         req.session.user.role === "admin" ||
         req.session.user.id === post.UserId
       ) {
-        await post.destroy();        
-        let hashtags = "%23" + post.Hashtags.map(el => el.name).join(", %23");
-        
+        await post.destroy();
+        let hashtags = "%23" + post.Hashtags.map((el) => el.name).join(", %23");
+
         let message = `Successfully deleted post with hashtag ${hashtags}`;
         if (req.session.user.id === post.UserId) {
           res.redirect(`/profile?message=${message}`);
