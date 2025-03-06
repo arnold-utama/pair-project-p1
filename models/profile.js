@@ -24,6 +24,18 @@ module.exports = (sequelize, DataTypes) => {
     get formatBirthdayEdit() {
       return new Date(this.birthday).toISOString().split("T")[0];
     }
+
+    static async countPost(userId) {
+      try {
+        const { Post } = sequelize.models;
+        let postCount = await Post.count({
+          where: { UserId: userId },
+        });
+        return postCount;
+      } catch (error) {
+        throw(error);
+      }
+    }
   }
   Profile.init(
     {
