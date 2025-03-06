@@ -5,32 +5,33 @@ router.get("/register", Controller.renderRegister);
 router.post("/register", Controller.handlerRegister);
 router.get("/login", Controller.renderLogin);
 router.post("/login", Controller.handlerLogin);
+router.get("/", Controller.redirectToHome)
+router.get("/home", Controller.renderPublicPosts)
 
 const isAdmin = function (req, res, next) {
-  console.log(req.session);
-  if (req.session.user && req.session.user.role !== "admin") {
-    const error = "You have no access";
-    res.redirect(`/login?error=${error}`);
-  } else {
-    next();
-  }
+    console.log(req.session);
+    if (req.session.user && req.session.user.role !== "admin") {
+        const error = "You have no access";
+        res.redirect(`/login?error=${error}`);
+    } else {
+        next();
+    }
 };
 
 router.use((req, res, next) => {
-  console.log(req.session);
-  if (!req.session.user) {
-    const error = "Please login first";
-    res.redirect(`/login?error=${error}`);
-  } else {
-    next();
-  }
+    console.log(req.session);
+    if (!req.session.user) {
+        const error = "Please login first";
+        res.redirect(`/login?error=${error}`);
+    } else {
+        next();
+    }
 });
 
 router.get("/logout", Controller.handlerLogout);
 router.get("/profile", Controller.renderUserProfileAndPosts);
 router.get("/profile/edit", Controller.renderEditProfile);
 router.post("/profile/edit", Controller.handlerEditProfile);
-router.get("/posts", Controller.renderPublicPosts);
 router.get("/posts/add", Controller.renderAddPost);
 router.post("/posts/add", Controller.handlerAddPost);
 router.get("/posts/:id", Controller.renderPostDetail);

@@ -11,7 +11,6 @@ module.exports = {
     });
 
     await queryInterface.bulkInsert('Posts', data);
-
   },
 
   async down(queryInterface, Sequelize) {
