@@ -2,25 +2,25 @@
     {
         "bio": "be your self",
         "profilePicture": "tet",
-        "gender": "tet",
+        "gender": "M",
         "birthday": "2045-05-09",
-        "isPrivate": true,
+        "isPrivate": false,
         "UserId": 1
     },
     {
         "bio": "be your self",
         "profilePicture": "tet",
-        "gender": "tet",
+        "gender": "M",
         "birthday": "2045-05-09",
-        "isPrivate": true,
+        "isPrivate": false,
         "UserId": 2
     },
     {
         "bio": "be your self",
         "profilePicture": "tet",
-        "gender": "tet",
+        "gender": "M",
         "birthday": "2045-05-09",
-        "isPrivate": true,
+        "isPrivate": false,
         "UserId": 3
     }
 ]

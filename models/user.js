@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasOne(models.Profile);
+      User.hasMany(models.Post);
     }
   }
   User.init(
@@ -65,6 +67,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       role: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     {

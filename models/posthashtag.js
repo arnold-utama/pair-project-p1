@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class PostHashtag extends Model {
     /**
@@ -13,12 +11,29 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  PostHashtag.init({
-    PostId: DataTypes.INTEGER,
-    HashtagId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'PostHashtag',
-  });
+  PostHashtag.init(
+    {
+      PostId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      HashtagId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Hashtag is required",
+          },
+          notEmpty: {
+            msg: "Hashtag is required",
+          },
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "PostHashtag",
+    }
+  );
   return PostHashtag;
 };
