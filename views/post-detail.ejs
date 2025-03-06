@@ -1,27 +1,80 @@
-<div>
-  <img src="<%= post.image %>" alt="post_image.png" />
-</div>
+<!DOCTYPE html>
+<html lang="en">
 
-<p>Caption: <%= post.caption %>
-</p>
-<p>
-  <% post.Hashtags.forEach(el=> { %>
-    <a href="/home?search=<%= el.name %>">
-      <%= el.name %>
-    </a>&nbsp; <% }) %>
-</p>
-<p>by: <%= post.User.name %>
-</p>
-<p>on: <%= formatDate(post.createdAt) %>
-</p>
-<% if (user) { %>
-  <% if (user.role==="admin" || user.id===post.UserId) { %>
-    <a href="/posts/<%= post.id %>/edit">Edit Post</a>
-    <a href="/posts/<%= post.id %>/delete">Delete Post</a>
-    <% } %>
-      <% } %>
-        <% if (error) { %>
-          <div style="color: red">
-            <%= error %>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Post</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+  }
+</style>
+
+<body class="bg-black text-white overflow-hidden">
+  <!-- Navbar -->
+  <%- include('./_partial/navbar') %>
+
+    <div class="flex mt-16">
+      <!-- Sidebar -->
+      <%- include('./_partial/sidebar') %>
+
+        <!-- Main Content -->
+        <div class="flex justify-center gap-5 ml-0 md:ml-[250px] ">
+          <div class="w-[600px]  h-[700px] transition-margin duration-300 overflow-y-auto h-screen">
+
+            <div class="mt-5 p-5 bg-gray-800 rounded-lg border border-gray-700" style="padding-bottom: 100px;">
+              <div style="display: flex;align-items: center;">
+                <div
+                  class="w-16 h-16 rounded-full border-2 border-pink-500 flex items-center justify-center overflow-hidden">
+                  <img src="https://i.pinimg.com/474x/b7/a8/65/b7a865eafab76b149ac6ebaf70fdac48.jpg" alt="Story"
+                    class="w-full h-full object-cover">
+                </div>
+                <h3 class="font-bold px-3">
+                  <%= post.User.name %>
+                </h3>
+              </div>
+              <img src="<%= post.image %>" alt="Post Image" style="height: 500px; width: 600px; object-fit: cover;"
+                class="mt-2 rounded-lg">
+              <br>
+              <div style="font-size: 14px;">
+                <%= formatDate(post.createdAt) %>
+              </div>
+              <br>
+              <p style="font-size: 16px;">
+                <%= post.caption %>
+              </p>
+              <br>
+              <p style="font-size: 20px;">
+                <b>
+                  <% post.Hashtags.forEach(el=> { %>
+                    <a href="/home?search=<%= el.name %>">
+                      <%= el.name %>
+                    </a>&nbsp; <% }) %>
+                </b>
+              </p>
+
+              <% if (user) { %>
+                <% if (user.role==="admin" || user.id===post.UserId) { %>
+                  <a href="/posts/<%= post.id %>/edit">Edit Post</a>
+                  <a href="/posts/<%= post.id %>/delete">Delete Post</a>
+                  <% } %>
+                    <% } %>
+                      <% if (error) { %>
+                        <div style="color: red">
+                          <%= error %>
+                        </div>
+                        <% } %>
+            </div>
+
           </div>
-          <% } %>
+        </div>
+    </div>
+
+</body>
+
+</html>
