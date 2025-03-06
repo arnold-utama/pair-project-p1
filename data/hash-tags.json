@@ -1,17 +1,17 @@
 [
     {
-        "name": "#food"
+        "name": "food"
     },
     {
-        "name": "#animal"
+        "name": "animal"
     },
     {
-        "name": "#art"
+        "name": "art"
     },
     {
-        "name": "#funny"
+        "name": "funny"
     },
     {
-        "name": "#zalviin_virall"
+        "name": "zalviin_virall"
     }
 ]
