@@ -82,5 +82,9 @@
     {
         "PostId": 13,
         "HashtagId": 1
+    },
+    {
+        "PostId": 14,
+        "HashtagId": 1
     }
 ]
