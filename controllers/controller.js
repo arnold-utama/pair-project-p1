@@ -223,7 +223,8 @@ class Controller {
           },
         ],
       });
-      res.render("home", { data, search, message, session: req.session });
+      let picture = await Profile.findAll()
+      res.render("home", { data, search, message, session: req.session, picture });
     } catch (error) {
       res.send(error.message);
     }
