@@ -63,6 +63,10 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: {
             msg: "Password is required",
           },
+          len: {
+            args: [8, 255],
+            msg: "Password must be at least 8 characters long",
+          },
         },
       },
       role: {
@@ -75,10 +79,12 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
     }
   );
+  User.beforeValidate((user) => {
+    user.role = "user";
+  });
   User.beforeCreate((user) => {
     const salt = bcrypt.genSaltSync(10);
     user.password = bcrypt.hashSync(user.password, salt);
-    user.role = "user";
   });
   return User;
 };
