@@ -70,9 +70,12 @@
             <label for="bio" class="form-label">Bio</label>
             <textarea class="form-control" id="bio" name="bio" rows="3"><%= profile.bio %></textarea>
           </div>
-          <div class="form-check form-switch mb-3">
-            <input class="form-check-input" type="checkbox" role="switch" id="isPrivate" name="isPrivate" <%= profile.isPrivate ? "checked" : "" %>>
-            <label class="form-check-label" for="isPrivate">Private Account</label>
+          <div class="mb-3">
+            <label for="isPrivate" class="form-label">Account Status</label>
+            <select class="form-select" name="isPrivate" id="isPrivate">
+              <option value="false" <%= profile.isPrivate ? "" : "selected" %>>Public</option>
+              <option value="true" <%= profile.isPrivate ? "selected" : "" %>>Private</option>
+            </select>
           </div>
           <button type="submit" class="btn btn-primary w-100">Save Changes</button>
         </form>
