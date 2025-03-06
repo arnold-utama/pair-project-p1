@@ -2,16 +2,26 @@
   <img src="<%= post.image %>" alt="post_image.png" />
 </div>
 
-<p>Caption: <%= post.caption %></p>
-<p>
-  <% post.Hashtags.forEach(el => { %>
-  <a href="/home?search=<%= el.name %>"><%= el.name %></a>&nbsp; <% }) %>
+<p>Caption: <%= post.caption %>
 </p>
-<p>by: <%= post.User.name %></p>
-<p>on: <%= formatDate(post.createdAt) %></p>
-<% if (user) { %> <% if (user.role === "admin" || user.id === post.UserId) { %>
-<a href="/posts/<%= post.id %>/edit">Edit Post</a>
-<a href="/posts/<%= post.id %>/delete">Delete Post</a>
-<% } %> <% } %> <% if (error) { %>
-<div style="color: red"><%= error %></div>
-<% } %>
+<p>
+  <% post.Hashtags.forEach(el=> { %>
+    <a href="/home?search=<%= el.name %>">
+      <%= el.name %>
+    </a>&nbsp; <% }) %>
+</p>
+<p>by: <%= post.User.name %>
+</p>
+<p>on: <%= formatDate(post.createdAt) %>
+</p>
+<% if (user) { %>
+  <% if (user.role==="admin" || user.id===post.UserId) { %>
+    <a href="/posts/<%= post.id %>/edit">Edit Post</a>
+    <a href="/posts/<%= post.id %>/delete">Delete Post</a>
+    <% } %>
+      <% } %>
+        <% if (error) { %>
+          <div style="color: red">
+            <%= error %>
+          </div>
+          <% } %>
