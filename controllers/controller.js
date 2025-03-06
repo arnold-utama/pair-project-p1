@@ -136,18 +136,8 @@ class Controller {
       });
       let profilePicture = profile.profilePicture;
       if (req.file) {
-        if (profile.profilePicture) {
-          const oldImagePath = path.join(
-            __dirname,
-            "..",
-            "public",
-            profile.profilePicture
-          );
-          if (fs.existsSync(oldImagePath)) {
-            fs.unlinkSync(oldImagePath);
-          }
-        }
-        profilePicture = `/uploads/${req.file.filename}`;
+        let newImagePath = `/uploads/${req.file.filename}`;
+        profilePicture = newImagePath;
       }
       await profile.update({
         profilePicture,
@@ -304,13 +294,15 @@ class Controller {
     try {
       let { error } = req.query;
       let { id } = req.params;
-      let post = await Post.findByPk(id);
+      let post = await Post.findByPk(id, { include: Hashtag });
       if (
         req.session.user.role === "admin" ||
         req.session.user.id === post.UserId
       ) {
-        await post.destroy();
-        let message = `Successfully deleted post with id ${post.id}`;
+        await post.destroy();        
+        let hashtags = "%23" + post.Hashtags.map(el => el.name).join(", %23");
+        
+        let message = `Successfully deleted post with hashtag ${hashtags}`;
         if (req.session.user.id === post.UserId) {
           res.redirect(`/profile?message=${message}`);
         } else {
