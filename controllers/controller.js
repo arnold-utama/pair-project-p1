@@ -6,13 +6,6 @@ const path = require("path");
 const { Op } = require("sequelize");
 
 class Controller {
-  static async search(req, res) {
-    try {
-      res.render("search");
-    } catch (error) {
-      res.send(error.message);
-    }
-  }
   static async redirectToHome(req, res) {
     try {
       res.redirect("/home");
@@ -23,7 +16,7 @@ class Controller {
   static async renderRegister(req, res) {
     try {
       let { error } = req.query;
-      res.render("auth/register", { error });
+      res.render("auth/register", { error, session: req.session });
     } catch (error) {
       res.send(error.message);
     }
@@ -46,7 +39,7 @@ class Controller {
   static async renderLogin(req, res) {
     try {
       let { error } = req.query;
-      res.render("auth/login", { error });
+      res.render("auth/login", { error, session: req.session });
     } catch (error) {
       res.send(error.message);
     }
@@ -107,7 +100,7 @@ class Controller {
           },
         },
       });
-      res.render("profile", { profile, postCount, formatDate, message });
+      res.render("profile", { profile, postCount, formatDate, message, session: req.session });
     } catch (error) {
       res.send(error.message);
     }
@@ -120,7 +113,7 @@ class Controller {
         include: User,
         where: { UserId: id },
       });
-      res.render("edit-profile", { profile, error });
+      res.render("edit-profile", { profile, error, session: req.session });
     } catch (error) {
       res.send(error.message);
     }
@@ -171,7 +164,7 @@ class Controller {
     try {
       let { error } = req.query;
       let hashtags = await Hashtag.findAll();
-      res.render("add-post", { hashtags, error });
+      res.render("add-post", { hashtags, error, session: req.session });
     } catch (error) {
       res.send(error.message);
     }
@@ -220,7 +213,7 @@ class Controller {
           where: whereCondition,
         },
       });
-      res.render("home", { data, search, message });
+      res.render("home", { data, search, message, session: req.session });
     } catch (error) {
       res.send(error.message);
     }
@@ -228,10 +221,14 @@ class Controller {
   static async renderPostDetail(req, res) {
     try {
       let { error } = req.query;
-      let user = req.session.user;
       let { id } = req.params;
       let post = await Post.findByPk(id, { include: [User, Hashtag] });
-      res.render("post-detail", { post, formatDate, user, error });
+      res.render("post-detail", {
+        post,
+        formatDate,
+        error,
+        session: req.session,
+      });
     } catch (error) {
       res.send(error.message);
     }
@@ -247,7 +244,7 @@ class Controller {
         req.session.user.role === "admin" ||
         req.session.user.id === post.UserId
       ) {
-        res.render("edit-post", { post, hashtags, checkedHashtagIds, error });
+        res.render("edit-post", { post, hashtags, checkedHashtagIds, error, session: req.session });
       } else {
         error = "You don't have access to edit this post";
         res.redirect(`/posts/${id}?error=${error}`);

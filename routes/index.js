@@ -21,16 +21,6 @@ router.post("/login", Controller.handlerLogin);
 router.get("/", Controller.redirectToHome);
 router.get("/home", Controller.renderPublicPosts);
 
-// const isAdmin = function (req, res, next) {
-//   console.log(req.session);
-//   if (req.session.user && req.session.user.role !== "admin") {
-//     const error = "You have no access";
-//     res.redirect(`/login?error=${error}`);
-//   } else {
-//     next();
-//   }
-// };
-
 const isLoggedIn = function (req, res, next) {
   console.log(req.session);
   if (!req.session.user) {
