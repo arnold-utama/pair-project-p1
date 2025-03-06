@@ -3,6 +3,7 @@ const { User, Profile, Post, Hashtag, PostHashtag } = require("../models");
 const bcrypt = require("bcryptjs");
 const fs = require("fs");
 const path = require("path");
+const { Op } = require("sequelize");
 
 class Controller {
   static async search(req, res) {
@@ -203,8 +204,23 @@ class Controller {
   }
   static async renderPublicPosts(req, res) {
     try {
-      let data = await Post.findAll()
-      res.render("home", { data });
+      let { search, message } = req.query;
+      let whereCondition = {};
+      if (search) {
+        search = search.replace(/^#/, "");
+        whereCondition = {
+          name: {
+            [Op.iLike]: `%${search}%`,
+          },
+        };
+      }
+      let data = await Post.findAll({
+        include: {
+          model: Hashtag,
+          where: whereCondition,
+        },
+      });
+      res.render("home", { data, search, message });
     } catch (error) {
       res.send(error.message);
     }
@@ -270,10 +286,6 @@ class Controller {
         req.session.user.role === "admin" ||
         req.session.user.id === post.UserId
       ) {
-        let imagePath = path.join(__dirname, "..", "public", post.image);
-        if (fs.existsSync(imagePath)) {
-          fs.unlinkSync(imagePath);
-        }
         await post.destroy();
         let message = `Successfully deleted post with id ${post.id}`;
         if (req.session.user.role === "admin") {

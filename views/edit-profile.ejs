@@ -1,61 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Instagaram</title>
+    <title>Instagram - Edit Profile</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .form-container {
+        width: 100%;
+        max-width: 400px;
+      }
+      .profile-pic {
+        display: block;
+        margin: 0 auto 10px;
+        border-radius: 50%;
+      }
+    </style>
   </head>
   <body>
-    <h1>Edit My Profile</h1>
-    <% if (error) { %>
-      <div class="text-danger">
-        <% error = error.split(",") %>
-        <% error.forEach(el => { %>
-          <p><%= el %></p>
-        <% }) %>
-      </div>
-    <% } %>
-    <form action="/profile/edit" method="post" enctype="multipart/form-data">
-      <div class="mb-3">
-        <label for="profilePicture" class="form-label">Profile Picture</label>
-        <input type="file" class="form-control" id="profilePicture" name="profilePicture" />
-        <% if (profile.profilePicture) { %>
-          <img src="<%= profile.profilePicture %>" alt="Profile Picture" width="150"/>
+    <div class="form-container">
+      <div class="card p-4">
+        <h2 class="text-center">Edit My Profile</h2>
+        <% if (error) { %>
+          <div class="text-danger">
+            <% error = error.split(",") %>
+            <% error.forEach(el => { %>
+              <p><%= el %></p>
+            <% }) %>
+          </div>
         <% } %>
+        <form action="/profile/edit" method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="profilePicture" class="form-label">Profile Picture</label>
+            <input type="file" class="form-control" id="profilePicture" name="profilePicture" />
+            <% if (profile.profilePicture) { %>
+              <center>
+                <img src="<%= profile.profilePicture %>" alt="" width="100" class="center"/>
+              </center>
+            <% } %>
+          </div>
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="<%= profile.User.name %>" />
+          </div>
+          <div class="mb-3">
+            <label for="birthday" class="form-label">Birthday</label>
+            <input type="date" class="form-control" id="birthday" name="birthday" value="<%= profile.formatBirthdayEdit %>" />
+          </div>
+          <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <select class="form-select" name="gender" id="gender">
+              <option <%= !profile.gender ? "selected" : "" %> value="">--SELECT--</option>
+              <option <%= profile.gender === "M" ? "selected" : "" %> value="M">M</option>
+              <option <%= profile.gender === "F" ? "selected" : "" %> value="F">F</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="bio" class="form-label">Bio</label>
+            <textarea class="form-control" id="bio" name="bio" rows="3"><%= profile.bio %></textarea>
+          </div>
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" role="switch" id="isPrivate" name="isPrivate" <%= profile.isPrivate ? "checked" : "" %>>
+            <label class="form-check-label" for="isPrivate">Private Account</label>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+        </form>
       </div>
-      <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" name="name" value="<%= profile.User.name %>" />
-        <% console.log(profile.User)%>
-      </div>
-      <div class="mb-3">
-        <label for="birthday" class="form-label">Birthday</label>
-        <input type="date" class="form-control" id="birthday" name="birthday" value="<%= profile.formatBirthdayEdit %>" />
-      </div>
-      <div class="mb-3">
-        <label for="gender" class="form-label">Gender</label>
-        <select class="form-select" name="gender" id="gender">
-          <option <%= !profile.gender ? "selected" : "" %> value="">--SELECT--</option>
-          <option <%= profile.gender === "M" ? "selected" : "" %> value="M">M</option>
-          <option <%= profile.gender === "F" ? "selected" : "" %> value="F">F</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="bio" class="form-label">Bio</label>
-        <textarea class="form-control" id="bio" name="bio" rows="5"><%= profile.bio %></textarea>
-      </div>
-      <div class="form-check form-switch mb-3">
-        <input class="form-check-input" type="checkbox" role="switch" id="isPrivate" name="isPrivate" <%= profile.isPrivate ? "checked" : "" %>>
-        <label class="form-check-label" for="isPrivate">Private Account</label>
-      </div>
-      <button type="submit" class="btn btn-primary">Edit</button>
-    </form>
+    </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
