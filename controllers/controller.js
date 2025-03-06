@@ -2,6 +2,13 @@ const { User } = require("../models");
 const bcrypt = require("bcryptjs");
 
 class Controller {
+  static async redirectToHome(req, res) {
+    try {
+      res.redirect("/home");
+    } catch (error) {
+      res.send(error.message);
+    }
+  }
   static async renderRegister(req, res) {
     try {
       let { error } = req.query;
@@ -106,7 +113,7 @@ class Controller {
   }
   static async renderPublicPosts(req, res) {
     try {
-      let { search } = req.query;
+      res.render("home")
     } catch (error) {
       res.send(error.message);
     }
