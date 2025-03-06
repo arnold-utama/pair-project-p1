@@ -53,13 +53,13 @@
                 <b>
                   <% post.Hashtags.forEach(el=> { %>
                     <a href="/home?search=<%= el.name %>">
-                      <%= el.name %>
+                      #<%= el.name %>
                     </a>&nbsp; <% }) %>
                 </b>
               </p>
 
-              <% if (user) { %>
-                <% if (user.role==="admin" || user.id===post.UserId) { %>
+              <% if (session.user) { %>
+                <% if (session.user.role === "admin" || session.user.id === post.UserId) { %>
                   <a href="/posts/<%= post.id %>/edit" class="bg-gray-800 text-white px-4 py-1 rounded-md">Edit Post</a>
                   <a href="/posts/<%= post.id %>/delete" class="bg-gray-800 text-white px-4 py-1 rounded-md">Delete
                     Post</a>

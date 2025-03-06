@@ -1,20 +1,30 @@
 <div
-    class="fixed top-0 w-full bg-gray-900 border-b border-gray-700 py-3 px-5 flex justify-between items-center shadow-sm">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Logo" class="h-10">
-    <div class="fa-solid">
-        Instagaram
-    </div>
-    <div style="display: flex;">
-        <a href="/login">
-            <div class="flex items-center gap-3 cursor-pointer hover:text-gray-400 fa-solid fa-right-to-bracket"
-                style="padding-right: 20px;">
-                Login
-            </div>
-        </a>
-        <a href="/logout">
-            <div class="flex items-center gap-3 cursor-pointer hover:text-gray-400 fa-solid fa-right-from-bracket">
-                Logout
-            </div>
-        </a>
-    </div>
+  class="fixed top-0 w-full bg-gray-900 border-b border-gray-700 py-3 px-5 flex justify-between items-center shadow-sm"
+>
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+    alt="Instagram Logo"
+    class="h-10"
+  />
+  <div class="fa-solid">Instagaram</div>
+  <div style="display: flex">
+    <% if (!session.user) { %>
+    <a href="/login">
+      <div
+        class="flex items-center gap-3 cursor-pointer hover:text-gray-400 fa-solid fa-right-to-bracket"
+        style="padding-right: 20px"
+      >
+        Login
+      </div>
+    </a>
+    <% } else { %>
+    <a href="/logout">
+      <div
+        class="flex items-center gap-3 cursor-pointer hover:text-gray-400 fa-solid fa-right-from-bracket"
+      >
+        Logout
+      </div>
+    </a>
+    <% } %>
+  </div>
 </div>
