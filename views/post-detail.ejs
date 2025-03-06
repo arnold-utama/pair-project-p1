@@ -63,11 +63,11 @@
             <% if (session.user) { %>
               <% if (session.user.role==="admin" || session.user.id===post.UserId) { %>
                 <a href="/posts/<%= post.id %>/edit"
-                  style="background-color: gray; background-color: orange; padding: 4px 16px; border-radius: 6px;"
+                  style="background-color: orange; padding: 4px 16px; border-radius: 6px;"
                   class="inline-block transition-transform duration-300 hover:scale-[1.3]">Edit
                   Post</a>
                 <a href="/posts/<%= post.id %>/delete"
-                  style="background-color: gray; background-color: red; padding: 4px 16px; border-radius: 6px;"
+                  style="background-color: red; padding: 4px 16px; border-radius: 6px;"
                   class="inline-block transition-transform duration-300 hover:scale-[1.3]">Delete
                   Post</a>
                 <% } %>

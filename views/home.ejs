@@ -129,6 +129,11 @@
             </div>
 
             <!-- Post List -->
+            <% if (message) { %>
+              <div style="color: red">
+                <%= message %>
+              </div>
+            <% } %>
             <div id="" class="flex flex-wrap gap-1">
               <% data.forEach(el=> { %>
                 <a href="/posts/<%= el.id %>">

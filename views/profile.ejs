@@ -80,6 +80,11 @@
             >
           </section>
 
+          <% if (message) { %>
+            <div style="color: red">
+              <%= message %>
+            </div>
+          <% } %>
           <!-- Post Grid -->
           <div class="grid grid-cols-3 gap-1 mt-5">
             <% profile.User.Posts.forEach(el=> { %>
