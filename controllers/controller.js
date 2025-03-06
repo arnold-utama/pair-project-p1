@@ -214,10 +214,24 @@ class Controller {
         };
       }
       let data = await Post.findAll({
-        include: {
-          model: Hashtag,
-          where: whereCondition,
-        },
+        include: [
+          {
+            model: Hashtag,
+            where: whereCondition,
+          },
+          {
+            model: User,
+            required: true,
+            include: [
+              {
+                model: Profile,
+                where: {
+                  isPrivate: false,
+                },
+              },
+            ],
+          },
+        ],
       });
       res.render("home", { data, search, message, session: req.session });
     } catch (error) {

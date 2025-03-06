@@ -1,5 +1,5 @@
 function formatDate(date) {
-  var options = {
+  let options = {
     weekday: "long",
     year: "numeric",
     month: "long",
