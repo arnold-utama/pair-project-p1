@@ -22,25 +22,34 @@
                     <!-- Profile Section -->
                     <div class="max-w-4xl mx-auto" style="margin-top: 50px;">
                         <div class="flex items-center gap-6" style="margin-bottom: 60px;">
-                            <img src="<%= profile.image %>" alt="Profile Picture"
+                            <img src="<%= profile.profilePicture %>" alt="Profile Picture"
                                 class="w-24 h-24 rounded-full object-cover border-2 border-gray-500">
                             <div>
                                 <div class="flex items-center gap-4">
                                     <h1 class="text-xl font-bold">
-                                        <%= profile.username %>
+                                        <%= profile.User.name %>
                                     </h1>
-                                    <button class="bg-gray-800 text-white px-4 py-1 rounded-md">Edit Profile</button>
+                                    <a href="/profile/edit" class="bg-gray-800 text-white px-4 py-1 rounded-md">Edit
+                                        Profile</a>
+                                    <a href="/posts/add" class="bg-gray-800 text-white px-4 py-1 rounded-md">New
+                                        Post</a>
                                 </div>
                                 <div class="flex gap-5 mt-2">
                                     <p><strong>
-                                            <%= profile.posts.length %>
+                                            <%= postCount %>
                                         </strong> Posts</p>
                                     <p><strong>
-                                            <%= profile.followers %>
-                                        </strong> Followers</p>
+                                            <%= profile.gender %>
+                                        </strong> Gender</p>
                                     <p><strong>
-                                            <%= profile.following %>
-                                        </strong> Following</p>
+                                            <%= profile.age %>
+                                        </strong> Age</p>
+                                    <p><strong>
+                                            <%= formatDate(profile.createdAt) %>
+                                        </strong> createdAt</p>
+                                    <p><strong>
+                                            <%= profile.isPrivate ? "Private" : "Public" %>
+                                        </strong> account status</p>
                                 </div>
                                 <p class="text-sm mt-2">
                                     <%= profile.bio %>
@@ -50,52 +59,15 @@
 
                         <!-- Post Grid -->
                         <div class="grid grid-cols-3 gap-1 mt-5">
-                            <% profile.posts.forEach(post=> { %>
-                                <img src="<%= post.image %>" alt="Post Image"
-                                    class="object-cover transition-transform duration-300 hover:scale-[1.3] rounded-lg"
-                                    style="height: 400px; width: 290px;">
-                                <% }); %>
+                            <% profile.User.Posts.forEach(post=> { %>
+                                <a href="/posts/<%= post.id %>">
+                                    <img src="<%= post.image %>" alt="Post Image"
+                                        class="object-cover transition-transform duration-300 hover:scale-[1.3] rounded-lg"
+                                        style="height: 400px; width: 290px;">
+                                    <% }); %>
+                                </a>
                         </div>
                     </div>
                 </div>
         </div>
 </body>
-
-</html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Instagaram</title>
-  </head>
-  <body>
-    <h1>My Profile</h1>
-    <hr />
-    <h2>Profile Details</h2>
-    <hr />
-    <a href="/profile/edit">Edit Profile</a>
-    <div>
-      <% if (profile.profilePicture) { %>
-      <img src="<%= profile.profilePicture %>" alt="profile_picture.png" />
-      <% } else { %>
-      <p>[profile picture not set]</p>
-      <% } %>
-    </div>
-    <p>Name: <%= profile.User.name %></p>
-    <p>Age: <%= profile.birthday ? profile.age : "[birthday not set]" %></p>
-    <p>Gender: <%= profile.gender || "[gender not set]" %></p>
-    <p>Bio: <%= profile.bio || "[bio not set]" %></p>
-    <p>Account created on: <%= formatDate(profile.createdAt) %></p>
-    <p>Account status: <%= profile.isPrivate ? "Private" : "Public" %></p>
-    <hr />
-    <h2>My Posts</h2>
-    <hr />
-    <a href="/posts/add">New Post</a>
-    <% profile.User.Posts.forEach(el => { %>
-    <div>
-      <a href="/posts/<%= el.id %>">
-        <img src="<%= el.image %>" alt="post_image" />
-      </a>
-    </div>
-    <% }) %>
-  </body>
-</html>

@@ -64,7 +64,7 @@ class Controller {
             role: user.role,
             createdAt: user.createdAt,
           };
-          res.redirect("/profile");
+          res.redirect("/home");
         } else {
           let error = "Invalid password";
           res.redirect(`/login?error=${error}`);
@@ -203,7 +203,8 @@ class Controller {
   }
   static async renderPublicPosts(req, res) {
     try {
-      res.render("home");
+      let data = await Post.findAll()
+      res.render("home", { data });
     } catch (error) {
       res.send(error.message);
     }
