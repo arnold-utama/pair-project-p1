@@ -1,34 +1,73 @@
 const { User } = require("../models");
+const bcrypt = require("bcryptjs");
 
 class Controller {
   static async renderRegister(req, res) {
     try {
-      res.render("auth/register")
+      let { error } = req.query;
+      res.render("auth/register", { error });
     } catch (error) {
       res.send(error.message);
     }
   }
   static async handlerRegister(req, res) {
     try {
+      let { email, name, password } = req.body;
+      await User.create({ email, name, password });
+      res.redirect("/login");
     } catch (error) {
-      res.send(error.message);
+      if (error.name === "SequelizeValidationError") {
+        let errors = error.errors.map((el) => el.message);
+        res.redirect(`/register?error=${errors}`);
+      } else {
+        res.send(error.message);
+      }
     }
   }
   static async renderLogin(req, res) {
     try {
-      res.render("auth/login")
+      let { error } = req.query;
+      res.render("auth/login", { error });
     } catch (error) {
       res.send(error.message);
     }
   }
   static async handlerLogin(req, res) {
     try {
+      let { email, password } = req.body;
+      let user = await User.findOne({ where: { email } });
+      if (user) {
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        if (isValidPassword) {
+          req.session.user = {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+            createdAt: user.createdAt,
+          };
+          res.redirect("/profile");
+        } else {
+          let error = "Invalid password";
+          res.redirect(`/login?error=${error}`);
+        }
+      } else {
+        let error = "Invalid email";
+        res.redirect(`/login?error=${error}`);
+      }
     } catch (error) {
       res.send(error.message);
     }
   }
   static async handlerLogout(req, res) {
     try {
+      req.session.destroy((error) => {
+        if (error) {
+          res.send(error);
+        } else {
+          console.log("Session Destroyed");
+          res.redirect("/login")
+        }
+      })
     } catch (error) {
       res.send(error.message);
     }
@@ -36,6 +75,7 @@ class Controller {
 
   static async renderUserProfileAndPosts(req, res) {
     try {
+      res.render("profile");
     } catch (error) {
       res.send(error.message);
     }
